@@ -1,8 +1,10 @@
 const express = require("express");
+const axios = require("axios");
+require("dotenv").config();
 
 // Initialise Express
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Basic route
 app.get("/", (req, res) => {
