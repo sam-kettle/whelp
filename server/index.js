@@ -18,14 +18,14 @@ app.get("/", (req, res) => {
                 },
             };
             const result = await axios.get(url, config);
-            const data = result.data;
-            console.log(data);
+            return result.data;
         } catch (e) {
             console.log(e);
         }
     };
-    getData();
-    res.send("Express backend running.");
+    getData().then((data) => {
+        res.json(data);
+    });
 });
 
 app.listen(PORT, () => console.log(`Server running on localhost:${PORT}`));
