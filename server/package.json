@@ -1,11 +1,17 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "description": "Backend server for Whelp app",
-  "main": "index.js",
-  "author": "SAm Eddy",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+    "name": "server",
+    "version": "1.0.0",
+    "description": "Backend server for Whelp app",
+    "scripts": {
+        "start": "nodemon index.js"
+    },
+    "main": "index.js",
+    "author": "SAm Eddy",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
 }
