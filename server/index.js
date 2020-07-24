@@ -13,6 +13,7 @@ app.get("/:term/:location", (req, res) => {
 
     const getBusinesses = async () => {
         try {
+            // Use axios to fetch business data from Yelp API
             const url =
                 `https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`;
             const config = {
@@ -21,11 +22,17 @@ app.get("/:term/:location", (req, res) => {
                 },
             };
             const result = await axios.get(url, config);
-            return result.data.businesses;
+            const data = result.data.businesses;
+            console.log(data)
+
+            // Filter retrieved businesses by low ratings
+            return data.filter((item) => { return item.rating <= 3.5 })
+
         } catch (e) {
             console.log(e);
         }
     };
+
     getBusinesses().then((data) => {
         res.json(data);
     });
