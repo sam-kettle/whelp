@@ -6,28 +6,26 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Basic route
-app.get("/:term/:location", (req, res) => {
-    const term = req.params.term;
-    const location = req.params.location;
+// Route for front-end to collect data
+app.get("/:type/:location", (req, res) => {
+    const type = req.params.type;
+    const location = "51.509865,-0.118092";
+    const key = process.env.MAPS_API_KEY;
+    const radius = 8000;
 
     const getBusinesses = async () => {
         try {
             // Use axios to fetch business data from Yelp API
-            const url =
-                `https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}`;
-            const config = {
-                headers: {
-                    Authorization: "Bearer " + process.env.YELP_API_KEY,
-                },
-            };
-            const result = await axios.get(url, config);
-            const data = result.data.businesses;
-            console.log(data)
+            const url = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location}&radius=${radius}&type=${type}&key=${key}`;
+
+            const result = await axios.get(url);
+            const data = result.data.results;
+            console.log(data);
 
             // Filter retrieved businesses by low ratings
-            return data.filter((item) => { return item.rating <= 3.5 })
-
+            return data.filter((item) => {
+                return item.rating <= 3.9;
+            });
         } catch (e) {
             console.log(e);
         }
